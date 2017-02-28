@@ -23,27 +23,39 @@ var
 		Ribnita: 617486,
 		Tiraspol: 617239,
 	},
-	citiesArr = [null, 618426, 618605, 618577, 617094, 618365, 618456, 617638, 617486, 617239];
+	citiesArr = [618426, 618605, 618577, 617094, 618365, 618456, 617638, 617486, 617239];
 
+firstStep();
+function firstStep(argument) {
+
+	$.ajax({
+			url: 'data/datArr9.json',
+			type: 'GET',
+			dataType: 'json'
+		})
+		.done(function(data) {
+			currentData = data;
+		});
+
+}
 
 $('[data-cities]').click(function (e) {
 	e.preventDefault();
-	var x = + e.target.dataset.cit;
-	x = citiesArr[x];
-	console.log(x);
+	var x = + e.target.dataset.cit,
+	y = citiesArr[x];
 	if (x) {
-		localData = localStorage.getItem(x);
+		secondStep(currentData[x]);
+		/*localData = localStorage.getItem(x);
 		if (localData) {
 		secondStep(JSON.parse(localData));
 		} else {
 			console.log('нету');
-			firstStep();
-		}
+		}*/
 	}
 });
 
 
-function firstStep() {
+/*function firstStep() {
 	localData = localStorage.getItem('618426'); // локал сторэдж версия
 	localDataDate = Date.parse(localStorage.getItem('date')); // когда забирали данные ранее
 	currentDate = Date.parse(new Date());
@@ -74,14 +86,13 @@ function firstStep() {
 	} else {
 		console.log('прошло меньше 12 минут');
 	}
-}
+}*/
 
-// если 
+// 
 function secondStep(recievedData) {
 	currentData = recievedData;
 	triWeater(currentData);
 }
-
 
 // погода на 4 периода
 function triWeater(WeaterData) {
